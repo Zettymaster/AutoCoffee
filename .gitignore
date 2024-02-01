@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# user files
+*.vcxproj.user
+
+# build dirs
+/bin
+/obj
+/.vs
