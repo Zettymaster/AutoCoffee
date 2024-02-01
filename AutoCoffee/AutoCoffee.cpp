@@ -16,6 +16,15 @@ T string_cast(U s);
 template<>
 std::string string_cast(std::wstring s)
 {
+	if (s.length() > std::numeric_limits<int>::max())
+	{
+		// you are trusting MS to convert a string of gigantic proportions,
+		// but MS broken ass API only takes in an int.
+		// here be dragons!
+		__debugbreak();
+	}
+
+	// first call only gets us the needed buffer length
 	const std::size_t size_needed = WideCharToMultiByte(CP_UTF8, 0, s.data(), static_cast<int>(s.size()), nullptr, 0, nullptr, nullptr);
 	std::string u8_str(size_needed, '\0');
 	WideCharToMultiByte(CP_UTF8, 
